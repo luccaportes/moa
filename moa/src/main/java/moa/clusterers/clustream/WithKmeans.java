@@ -101,7 +101,6 @@ public class WithKmeans extends AbstractClusterer {
 	
 				buffer.clear();
 				initialized = true;
-				return;
 			}
 		}
 
@@ -227,7 +226,7 @@ public class WithKmeans extends AbstractClusterer {
 	 * (to produce best results) 
 	 * 
 	 * @param k
-	 * @param data
+	 * @param clustering
 	 * @return (macro)clustering - CFClusters
 	 */
 	public static Clustering kMeans_gta(int k, Clustering clustering, Clustering gtClustering) {
@@ -265,7 +264,7 @@ public class WithKmeans extends AbstractClusterer {
 	 * k-means of (micro)clusters, with randomized initialization. 
 	 * 
 	 * @param k
-	 * @param data
+	 * @param clustering
 	 * @return (macro)clustering - CFClusters
 	 */
 	public static Clustering kMeans_rand(int k, Clustering clustering) {
@@ -472,5 +471,17 @@ public class WithKmeans extends AbstractClusterer {
 	@Override
 	public void getModelDescription(StringBuilder out, int indent) {
 		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	public void adjustParameters() {
+
+		if(maxNumKernelsOption.getValue() != this.kernels.length){
+			throw new UnsupportedOperationException("Cannot change kernel size");
+		}
+
+		this.timeWindow = timeWindowOption.getValue();
+		this.bufferSize = maxNumKernelsOption.getValue();
+		t = kernelRadiFactorOption.getValue();
+		m = maxNumKernelsOption.getValue();
 	}
 }
